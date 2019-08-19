@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { SwiftUI } from "./SwiftUI";
+import { SwiftUI } from "../../src/SwiftUI";
 
 export const List = SwiftUI((items, { action, childrenAll }) => {
   const itemStyle = {
@@ -32,13 +32,10 @@ export const Image = SwiftUI((image, props) => {
 export const VStack = SwiftUI(({ alignment, children }) => {
   const style = {
     display: "inline-flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    alignItems: alignment
   };
-  return (
-    <v-stack style={style} data-alignment={alignment}>
-      {children}
-    </v-stack>
-  );
+  return <v-stack style={style}>{children}</v-stack>;
 });
 
 export const Text = SwiftUI(
