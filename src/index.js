@@ -1,1 +1,1 @@
-import "../examples/namerizer/index";
+import "./examples/namerizer/index";

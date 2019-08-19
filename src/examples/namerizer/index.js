@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { SwiftUI as View } from "../../src/SwiftUI";
+import { SwiftUI as View } from "../../SwiftUI";
 import { Themes } from "./Themes";
 import { List, Image, VStack, Text } from "./components";
 import { Colors, Alignment } from "./enums";

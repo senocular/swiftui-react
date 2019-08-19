@@ -15,9 +15,7 @@ function SwiftUITodos(props) {
 }
 ```
 
-This is equivalent to the following.
-
-**React**
+The same example in **React**
 
 ```jsx
 function ReactTodos(props) {
@@ -69,22 +67,27 @@ A component type created by calling `SwiftUI()`.
 type ChildrenExecutor =
   ((value?: any) => ReactElement | void) |
   ((value: any, index: number, collection: any[]) => ReactElement | void)
+
 function SwiftUIComponent(
     value?: any,
     props?: object,
     childrenExecutor?: ChildrenExecutor
   ):Proxy;
+
 function SwiftUIComponent(
     value: any,
     childrenExecutor: ChildrenExecutor
   ):Proxy;
+
 function SwiftUIComponent(
     props: object,
     childrenExecutor: ChildrenExecutor
   ):Proxy;
+
 function SwiftUIComponent(
     props: object
   ):Proxy;
+
 function SwiftUIComponent(
     childrenExecutor: ChildrenExecutor
   ):Proxy;
@@ -154,11 +157,10 @@ At first glance, the use of SwfitUI-React components do look very similar to use
 ```javascript
 React.createElement('div', null, [
   React.createElement('h1', null, 'Todos')
-    React.createElement('ul', null, todos.map(todo =>
-      React.createElement('li', {color: todo.color, todo.text)
-    ))
-  ])
-}
+  React.createElement('ul', null, todos.map(todo =>
+    React.createElement('li', {color: todo.color}, todo.text)
+  ))
+])
 ```
 
 **SwiftUI-React**

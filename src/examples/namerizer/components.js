@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { SwiftUI } from "../../src/SwiftUI";
+import { SwiftUI } from "../../SwiftUI";
 
 export const List = SwiftUI((items, { action, childrenAll }) => {
   const itemStyle = {
