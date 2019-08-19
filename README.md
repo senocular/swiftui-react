@@ -2,9 +2,24 @@
 
 A [SwiftUI](https://developer.apple.com/xcode/swiftui/)-inspired syntax for [React](https://reactjs.org/) components.
 
-**React**
+**SwiftUI-React**
 
 ```javascript
+function SwiftUITodos(props) {
+  Div(() => {
+    H1("Todos");
+    Ul(props.todos, todo => {
+      Li(todo.text).color(todo.color);
+    });
+  });
+}
+```
+
+This is equivalent to the following.
+
+**React**
+
+```jsx
 function ReactTodos(props) {
   return (
     <div>
@@ -19,19 +34,6 @@ function ReactTodos(props) {
 }
 ```
 
-**SwiftUI-React**
-
-```javascript
-function SwiftUITodos(props) {
-  Div(() => {
-    H1("Todos");
-    Ul(props.todos, todo => {
-      Li(todo.text).color(todo.color);
-    });
-  });
-}
-```
-
 ### What it is
 
 An alternative approach for representing React components and component hierarchies using function calls instead of JSX, _inspired_ by the syntax used by Apple's SwiftUI.
@@ -42,20 +44,7 @@ A port of, or attempt to recreate, SwiftUI or its API within React.
 
 ## API
 
-SwiftUI-React consists of a single factory function, `SwiftUI()`. It's used to create SwiftUI-React components that are both React components as well as functions which can be called directly within a render pass to add components to the React DOM.
-
-In order for SwiftUI-React component function calls to be recognized as components, they must be used within the context of a SwiftUI-React-capable hierarchy. The easiest way to do this is to wrap the component used within `ReactDOM.render()` with `SwiftUI()`.
-
-```javascript
-ReactDOM.render(SwiftUI(<App />), document.getElementById("app"));
-```
-
-Alternatively, any SwiftUI-react component rendered as a normal React component will also serve as the root for a SwiftUI-React-capable hierarchy.
-
-```javascript
-const SuiApp = SwiftUI(App);
-ReactDOM.render(<SuiApp />, document.getElementById("app"));
-```
+The SwiftUI-React API consists of one factory function, `SwiftUI()`, and the components it creates. Swift-React components can be used as React components or called as regular functions. When called as functions, they will add React components to the React DOM.
 
 ### `SwiftUI`
 
@@ -105,7 +94,40 @@ TODO
 
 ## Usage
 
-TODO
+In order for SwiftUI-React component function calls to be recognized as components, they must be used within the context of a SwiftUI-React-capable hierarchy. This means being within the render body of a component that is itself, or has an ancestor that is a SwiftUI-React component that been added to the React DOM as a normal React component.
+
+```jsx
+const H1 = SwiftUI((value, props) => {
+  return <h1>{value}</h1>;
+});
+function App() {
+  H1("App");
+}
+const SwiftUIApp = SwiftUI(App);
+ReactDOM.render(<SwiftUIApp />, document.getElementById("app"));
+```
+
+Alternatively, you can wrap a React element in `SwiftUI()`, such as the root element passed into `ReactDOM.render()`. This will return a SwiftUI-React component version of that element.
+
+```jsx
+function App() {
+  return <div>App</div>;
+}
+ReactDOM.render(SwiftUI(<App />), document.getElementById("app"));
+```
+
+Other
+
+```jsx
+const H1 = SwiftUI((value, props) => {
+  return <h1>{value}</h1>;
+});
+
+function App() {
+  H1("App");
+}
+ReactDOM.render(SwiftUI(<App />), document.getElementById("app"));
+```
 
 ## FAQ
 
@@ -130,7 +152,6 @@ At first glance, the use of SwfitUI-React components do look very similar to use
 **React**
 
 ```javascript
-
 React.createElement('div', null, [
   React.createElement('h1', null, 'Todos')
     React.createElement('ul', null, todos.map(todo =>

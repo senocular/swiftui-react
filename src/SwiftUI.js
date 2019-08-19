@@ -1,5 +1,3 @@
-// https://developer.apple.com/xcode/swiftUI/
-
 import React, {
   createElement,
   Component,
@@ -71,7 +69,11 @@ function normalizeComponentArgs(args, hasValue) {
   } else if (count === 1) {
     // (props|value [, childrenExecutor])
 
-    if (hasValue) {
+    // If defined with a value or not defined with a value but
+    // the first argument meant for props is not an object, assume
+    // its intended to be a value and not a props object
+
+    if (hasValue || typeof args[0] !== "object") {
       value = args[0];
       props = { [VALUE_KEY]: value };
     } else {
