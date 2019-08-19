@@ -15,23 +15,6 @@ function SwiftUITodos(props) {
 }
 ```
 
-The same example in **React**
-
-```jsx
-function ReactTodos(props) {
-  return (
-    <div>
-      <h1>Todos</h1>
-      <ul>
-        {props.todos.map(todo => (
-          <li color={todo.color}>{todo.text}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-```
-
 ### What it is
 
 An alternative approach for representing React components and component hierarchies using function calls instead of JSX, _inspired_ by the syntax used by Apple's SwiftUI.
@@ -42,7 +25,7 @@ A port of, or attempt to recreate, SwiftUI or its API within React.
 
 ## API
 
-The SwiftUI-React API consists of one factory function, `SwiftUI()`, and the components it creates. Swift-React components can be used as React components or called as regular functions. When called as functions, they will add React components to the React DOM.
+The SwiftUI-React API consists of one factory function, `SwiftUI()`, and the components it creates. Swift-React components can be used as React components or called as regular functions. When called as functions, they will add React components to the React DOM just as though they were used as React components.
 
 ### `SwiftUI`
 
@@ -54,10 +37,43 @@ function SwiftUI(
       ReactElement |
       ReactComponent |
       ((value: any, props: object) => ReactElement | void)
-  ):Function
+  ):SwiftUIComponent
 ```
 
-TODO
+#### Parameters
+
+**executor**: A React element, React component (function or class), or specialized component function that includes a `value` parameter along with the standard function component `props` parameter that is to be converted into a SwiftUI-React component or element instance.
+
+#### Returns
+
+A unique SwiftUIComponent function representing the component created, or a React element thats an instance of a SwiftUIComponent wrapping the React element passed.
+
+#### Description
+
+At a high level `SwiftUI()` converts React components into SwiftUI-React components.  It supports both function components and class components as well as a third variation of a function component that has two parameters.
+
+The third function variation is recognized when the arity of a function given to `SwiftUI()` is greater than 1.  In this case, when the component is called, it would expect the first argument to be its `value`, and the second to be its `props` rather than the first being the `props`.  This `value` argument is simply a convenience parameter that maps to `props.value`.
+
+```javascript
+const SComp = SwiftUI(function Comp (value, props) {})
+Comp(100)
+// is the same as
+const SComp = SwiftUI(function Comp (props) {})
+Comp({ value: 100 })
+```
+
+Aside from components, it can also convert React elements into SwiftUI-React elements.  This is not normally needed because you would generally just create and use SwiftUI-React components.
+
+```javascript
+function Comp (props) {}
+SwiftUI(<Comp />)
+// is the same as
+function Comp (props) {}
+const SComp = SwiftUI(Comp)
+<SComp />
+```
+
+Components returned from `SwiftUI()` calls are callable class constructors that can be used as React components or called as normal functions.  These constructors are identified in this documentation as having the type `SwiftUIComponent` but each is unique.
 
 ### `SwiftUIComponent`
 
@@ -92,6 +108,21 @@ function SwiftUIComponent(
     childrenExecutor: ChildrenExecutor
   ):Proxy;
 ```
+
+
+#### Parameters
+
+**value**: TODO
+
+**props**: TODO
+
+**childrenExecutor**: TODO
+
+#### Returns
+
+A Proxy object which transforms function calls into props setters, where the name of the method called becomes a prop name and the argument(s) passed in become its value.
+
+#### Description
 
 TODO
 
