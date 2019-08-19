@@ -50,27 +50,31 @@ A unique SwiftUIComponent function representing the component created, or a Reac
 
 #### Description
 
-At a high level `SwiftUI()` converts React components into SwiftUI-React components.  It supports both function components and class components as well as a third variation of a function component that has two parameters.
-
-The third function variation is recognized when the arity of a function given to `SwiftUI()` is greater than 1.  In this case, when the component is called, it would expect the first argument to be its `value`, and the second to be its `props` rather than the first being the `props`.  This `value` argument is simply a convenience parameter that maps to `props.value`.
+Essentially, `SwiftUI()` converts React components into SwiftUI-React components.  It supports both function components and class components as well as a third variation of a function component that has two parameters.
 
 ```javascript
-const SComp = SwiftUI(function Comp (value, props) {})
-Comp(100)
-// is the same as
-const SComp = SwiftUI(function Comp (props) {})
-Comp({ value: 100 })
+const SwiftUIComponent = SwiftUI(ReactComponent);
 ```
 
-Aside from components, it can also convert React elements into SwiftUI-React elements.  This is not normally needed because you would generally just create and use SwiftUI-React components.
+The third function variation - a value-first component - is recognized when the arity of a function given to `SwiftUI()` is greater than 1.  In this case, when the component is called, it would expect the first argument to be its `value` and the second to be its `props` rather than the first being the `props` as is the normal behavior.  The `value` argument is simply a convenience parameter that maps to `props.value`.
+
+```javascript
+const SuiComp = SwiftUI(function Comp (value, props) {});
+SuiComp(100);
+// is the same as
+const SuiComp = SwiftUI(function Comp (props) {});
+SuiComp({ value: 100 });
+```
+
+Aside from components, it can also convert React elements into SwiftUI-React elements.  This is not normally necessary because you would generally just create and use SwiftUI-React components.
 
 ```javascript
 function Comp (props) {}
-SwiftUI(<Comp />)
+SwiftUI(<Comp />);
 // is the same as
 function Comp (props) {}
-const SComp = SwiftUI(Comp)
-<SComp />
+const SuiComp = SwiftUI(Comp);
+<SuiComp />;
 ```
 
 Components returned from `SwiftUI()` calls are callable class constructors that can be used as React components or called as normal functions.  These constructors are identified in this documentation as having the type `SwiftUIComponent` but each is unique.
@@ -112,11 +116,11 @@ function SwiftUIComponent(
 
 #### Parameters
 
-**value**: TODO
+**value**: The value for `props.value`.  This is used if the component was defined as a value-first component or if the component was called with a non-object first argument.
 
-**props**: TODO
+**props**: The props object to use for the component.
 
-**childrenExecutor**: TODO
+**childrenExecutor**: A function that is used to set up the children of the component. This will either get passed `props.value` or if `props.value` is an array, will be treated as a map function that maps over all the values in that array.
 
 #### Returns
 
@@ -134,31 +138,19 @@ In order for SwiftUI-React component function calls to be recognized as componen
 const H1 = SwiftUI((value, props) => {
   return <h1>{value}</h1>;
 });
-function App() {
-  H1("App");
-}
-const SwiftUIApp = SwiftUI(App);
-ReactDOM.render(<SwiftUIApp />, document.getElementById("app"));
+
+const App = SwiftUI(function () {
+  H1("App"); // allowed because App is added as <App /> (below)
+});
+
+ReactDOM.render(<App />, document.getElementById("app"));
 ```
 
-Alternatively, you can wrap a React element in `SwiftUI()`, such as the root element passed into `ReactDOM.render()`. This will return a SwiftUI-React component version of that element.
+If your root is not a SwiftUI-React component, you can conveniently wrap it in a call to `SwiftUI()` to enable SwiftUI-React component calls within your components.
 
 ```jsx
 function App() {
   return <div>App</div>;
-}
-ReactDOM.render(SwiftUI(<App />), document.getElementById("app"));
-```
-
-Other
-
-```jsx
-const H1 = SwiftUI((value, props) => {
-  return <h1>{value}</h1>;
-});
-
-function App() {
-  H1("App");
 }
 ReactDOM.render(SwiftUI(<App />), document.getElementById("app"));
 ```
@@ -171,7 +163,7 @@ This project was an exploration in seeing how close a React component could get 
 
 ![SwiftUI Example](https://developer.apple.com/xcode/swiftui/images/hero-lockup-medium.png)
 
-The example was simple yet demonstrated a number of different characteristics of the SwuitUI that would have made a (React-backed) JavaScript implementation interesting to attempt.
+This example was simple yet demonstrated a number of different characteristics of the SwiftUI that would have made a (React-backed) JavaScript implementation interesting to attempt.  The SwiftUI version of this example (called "namerizer") is available in the [Examples](src/examples).
 
 ### Should I use this?
 
