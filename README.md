@@ -56,14 +56,14 @@ Essentially, `SwiftUI()` converts React components into SwiftUI-React components
 const SwiftUIComponent = SwiftUI(ReactComponent);
 ```
 
-The third function variation - a value-first component - is recognized when the arity of a function given to `SwiftUI()` is greater than 1.  In this case, when the component is called, it would expect the first argument to be its `value` and the second to be its `props` rather than the first being the `props` as is the normal behavior.  The `value` argument is simply a convenience parameter that maps to `props.value`.
+The third function variation - a value-first component - is recognized when the arity of a function given to `SwiftUI()` is greater than 1.  In this case, when the component is called, it would expect the first argument to be its `value` and the second to be its `props` rather than the first being the `props` as is the normal behavior.  The `value` argument is simply a convenience parameter that maps to `props.componentValue`.
 
 ```javascript
 const SuiComp = SwiftUI(function Comp (value, props) {});
 SuiComp(100);
 // is the same as
 const SuiComp = SwiftUI(function Comp (props) {});
-SuiComp({ value: 100 });
+SuiComp({ componentValue: 100 });
 ```
 
 Aside from components, it can also convert React elements into SwiftUI-React elements.  This is not normally necessary because you would generally just create and use SwiftUI-React components.
@@ -113,18 +113,17 @@ function SwiftUIComponent(
   ):Proxy;
 ```
 
-
 #### Parameters
 
-**value**: The value for `props.value`.  This is used if the component was defined as a value-first component or if the component was called with a non-object first argument.
+**value**: The value pased into the function call, or whats in `props.componentValue`.  This is used if the component was defined as a value-first component or if the component was called with a non-object first argument.
 
 **props**: The props object to use for the component.
 
-**childrenExecutor**: A function that is used to set up the children of the component. This will either get passed `props.value` or if `props.value` is an array, will be treated as a map function that maps over all the values in that array.
+**childrenExecutor**: A function that is used to set up the children of the component. This will either get passed `props.componentValue` or if `props.componentValue` is an array, will be treated as a map function that maps over all the values in that array.
 
 #### Returns
 
-A Proxy object which transforms function calls into props setters, where the name of the method called becomes a prop name and the argument(s) passed in become its value.
+A Proxy object which transforms method calls into props setters, where the name of the method called becomes a prop name and the argument(s) passed in become its value.
 
 #### Description
 

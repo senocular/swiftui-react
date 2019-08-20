@@ -28,7 +28,7 @@ const Strings = {
 
 // Special key values being accessed within
 // or sometimes added to user data
-const VALUE_KEY = "value";
+const VALUE_KEY = "componentValue";
 const KEY_FIELD_KEY = "keyField";
 const DEFAULT_KEY_FIELD = "id";
 
