@@ -9,7 +9,7 @@ function SwiftUITodos(props) {
   Div(() => {
     H1("Todos");
     Ul(props.todos, todo => {
-      Li(todo.text).color(todo.color);
+      Li(todo.text).lineThrough(todo.checked);
     });
   });
 }

@@ -1,1 +1,2 @@
-import "./examples/namerizer/index";
+// import "./examples/namerizer/";
+import "./examples/todos/";

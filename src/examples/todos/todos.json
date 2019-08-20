@@ -1,0 +1,22 @@
+[
+    {
+        "text": "Write Code",
+        "checked": true
+    },
+    {
+        "text": "Build",
+        "checked": true
+    },
+    {
+        "text": "Test",
+        "checked": false
+    },
+    {
+        "text": "Deploy",
+        "checked": false
+    },
+    {
+        "text": "Fix Bugs",
+        "checked": false
+    }
+]
