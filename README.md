@@ -177,10 +177,10 @@ At first glance, the use of SwfitUI-React components do look very similar to use
 **React**
 
 ```javascript
-React.createElement('div', null, [
-  React.createElement('h1', null, 'Todos')
-  React.createElement('ul', null, todos.map(todo =>
-    React.createElement('li', {color: todo.color}, todo.text)
+React.createElement("div", null, [
+  React.createElement("h1", null, "Todos")
+  React.createElement("ul", null, todos.map(todo =>
+    React.createElement("li", {lineThrough: todo.checked}, todo.text)
   ))
 ])
 ```
@@ -191,7 +191,7 @@ React.createElement('div', null, [
 Div(() => {
   H1("Todos");
   Ul(todos, todo => {
-    Li(todo.text).color(todo.color);
+    Li(todo.text).lineThrough(todo.checked);
   });
 });
 ```
