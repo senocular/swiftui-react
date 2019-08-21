@@ -77,7 +77,7 @@ const SuiComp = SwiftUI(Comp);
 <SuiComp />;
 ```
 
-Components returned from `SwiftUI()` calls are callable class constructors that can be used as React components or called as normal functions.  These constructors are identified in this documentation as having the type `SwiftUIComponent` but each is unique.
+Components returned from `SwiftUI()` calls are callable class constructors that can be used as React components or called as normal functions.  These constructors are identified in this documentation as having the type `SwiftUIComponent` but each instance of `SwiftUIComponent` returned from `SwiftUI()` is unique.
 
 ### `SwiftUIComponent`
 
@@ -127,7 +127,14 @@ A Proxy object which transforms method calls into props setters, where the name 
 
 #### Description
 
-TODO
+SwiftUI-React components can be used as React components or called as functions in other SwiftUI-React components.
+
+When a SwiftUI-React component is called as a function, if the last argument it was given is a function, that function is used to define the children of the component.  It will get called with either 0 arguments, 1 argument if a non-array component value is defined and available, or 3 arguments in the form of `valueElement, index, valueArray` if value is defined as an array.
+
+Values and props passed into a SwiftUI-React component get sent into their original component definition's render call.  Props will also get the following values:
+
+* `componentValue`: Added if a value is defined for, or otherwise forcibly given to a component call.
+* `childrenAll`: An array of all children sets for components that have array values and create children iterating over that array.  If a component doesn't have children, this is an empty array.  If a component has a child or children but does not loop over children, this will be an array with one element: `props.children`.
 
 ## Usage
 
