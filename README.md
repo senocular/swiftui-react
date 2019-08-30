@@ -81,7 +81,7 @@ Components returned from `SwiftUI()` calls are callable class constructors that 
 
 ### `SwiftUIComponent`
 
-A component type created by calling `SwiftUI()`.
+A component type created by calling `SwiftUI()` in the form of a callable constructor function.
 
 ```javascript
 type ChildrenExecutor =
@@ -138,7 +138,7 @@ Values and props passed into a SwiftUI-React component get sent into their origi
 
 ## Usage
 
-In order for SwiftUI-React component function calls to be recognized as components, they must be used within the context of a SwiftUI-React-capable hierarchy. This means being within the render body of a component that is itself, or has an ancestor that is a SwiftUI-React component that been added to the React DOM as a normal React component.
+In order for SwiftUI-React component function calls to be recognized as components, they must be used within the context of another SwiftUI-React component. This means being within the render body of a component that is itself, or has a parent that is a SwiftUI-React component that been added to the React DOM as a normal React component.
 
 ```jsx
 const H1 = SwiftUI((value, props) => {
@@ -152,12 +152,13 @@ const App = SwiftUI(function () {
 ReactDOM.render(<App />, document.getElementById("app"));
 ```
 
-If your root is not a SwiftUI-React component, you can conveniently wrap it in a call to `SwiftUI()` to enable SwiftUI-React component calls within your components.
+If your root is not a SwiftUI-React component, you can conveniently wrap it in a call to `SwiftUI()` to enable SwiftUI-React component calls within that root component.
 
 ```jsx
 function App() {
-  return <div>App</div>;
+  H1("App");
 }
+
 ReactDOM.render(SwiftUI(<App />), document.getElementById("app"));
 ```
 
