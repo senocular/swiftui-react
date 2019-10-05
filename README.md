@@ -170,7 +170,22 @@ This project was an exploration in seeing how close a React component could get 
 
 ![SwiftUI Example](https://developer.apple.com/xcode/swiftui/images/hero-lockup-medium.png)
 
-This example was simple yet demonstrated a number of different characteristics of the SwiftUI that would have made a (React-backed) JavaScript implementation interesting to attempt.  The SwiftUI version of this example (called "namerizer") is available in the [Examples](src/examples).
+This example was simple yet demonstrated a number of different characteristics of the SwiftUI that would have made a (React-backed) JavaScript implementation interesting to attempt.  The SwiftUI version of this example (called "namerizer") is available in the [Examples](src/examples).  Here is the SwiftUI-React version of the code seen in the SwiftUI screenshot:
+
+```javascript
+const Content = View(() => {
+  const model = Themes.listModel;
+
+  List(model.items, { action: model.selectItem }, item => {
+    Image(item.image);
+    VStack({ alignment: leading }, () => {
+      Text(item.title);
+      Text(item.subtitle)
+        .color(gray);
+    });
+  });
+});
+```
 
 ### Should I use this?
 
